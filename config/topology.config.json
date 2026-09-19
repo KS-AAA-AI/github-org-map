@@ -1,0 +1,19 @@
+{
+  "targetOwner": "KS-AAA-AI",
+  "timezone": "Asia/Seoul",
+  "aggregation": {
+    "includeForks": false,
+    "includeArchived": true,
+    "maxDisplayRows": 40
+  },
+  "privacy": {
+    "vaultPrefix": "APEX-VAULT",
+    "hashAlgorithm": "sha256",
+    "maskDescription": true
+  },
+  "output": {
+    "vectorPath": "artifacts/topology-map.svg",
+    "motionPath": "artifacts/topology-map.gif",
+    "historyDir": "artifacts/history"
+  }
+}

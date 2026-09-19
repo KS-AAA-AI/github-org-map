@@ -1,0 +1,125 @@
+/**
+ * Apex Repository Cartography Engine - Vector Canvas Renderer (SVG)
+ * Fully custom, high-tech cybernetic HUD visual architecture.
+ */
+
+import type { TopologyNode } from '../core/obfuscator.js';
+import type { TopologySummary } from '../core/matrix.js';
+
+export class VectorCanvasRenderer {
+  static render(summary: TopologySummary, nodes: TopologyNode[]): string {
+    const width = 1000;
+    const rowHeight = 44;
+    const maxDisplay = 10;
+    const displayNodes = nodes.slice(0, maxDisplay);
+    const height = 480 + Math.max(0, (displayNodes.length - 4) * 25);
+
+    const escapeXml = (unsafe: string) =>
+      unsafe.replace(/[<>&'"]/g, (c) => {
+        switch (c) {
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '&': return '&amp;';
+          case '\'': return '&apos;';
+          case '"': return '&quot;';
+          default: return c;
+        }
+      });
+
+    // Language pills
+    const topLangs = Object.entries(summary.languageDistribution)
+      .filter(([lang]) => lang !== 'CLASSIFIED')
+      .slice(0, 4)
+      .map(([lang, count]) => `${lang} (${count})`)
+      .join('  ·  ');
+
+    let rowsSvg = '';
+    const startY = 220;
+    
+    displayNodes.forEach((node, i) => {
+      const y = startY + i * 42;
+      const isVault = node.isPrivate;
+      const cardBg = isVault ? '#0F172A' : '#111C2E';
+      const borderCol = isVault ? '#334155' : '#0284C7';
+      const textCol = isVault ? '#94A3B8' : '#38BDF8';
+      const badgeCol = isVault ? '#F43F5E' : '#10B981';
+      const badgeText = isVault ? 'VAULT' : 'PUBLIC';
+
+      rowsSvg += `
+      <g transform="translate(40, ${y})">
+        <rect width="920" height="36" rx="8" fill="${cardBg}" stroke="${borderCol}" stroke-width="1.2" opacity="0.95"/>
+        <circle cx="20" cy="18" r="4" fill="${badgeCol}"/>
+        <text x="36" y="23" fill="${textCol}" font-family="Consolas, Monaco, monospace" font-size="14" font-weight="600">${escapeXml(node.identifier)}</text>
+        <rect x="740" y="8" width="70" height="20" rx="5" fill="#1E293B"/>
+        <text x="775" y="22" fill="${badgeCol}" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">${badgeText}</text>
+        <text x="890" y="23" fill="#64748B" font-family="system-ui, sans-serif" font-size="12" text-anchor="end">${escapeXml(node.relativeActivity)}</text>
+      </g>`;
+    });
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="100%" height="100%">
+  <defs>
+    <linearGradient id="apexBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070B12"/>
+      <stop offset="60%" stop-color="#0A101D"/>
+      <stop offset="100%" stop-color="#05080E"/>
+    </linearGradient>
+    <linearGradient id="neonAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F2FE"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="${width}" height="${height}" rx="24" fill="url(#apexBg)"/>
+  <rect x="1.5" y="1.5" width="${width - 3}" height="${height - 3}" rx="22.5" fill="none" stroke="#1E293B" stroke-width="2"/>
+
+  <!-- Top Header HUD -->
+  <g transform="translate(40, 45)">
+    <text x="0" y="0" fill="url(#neonAccent)" font-family="system-ui, sans-serif" font-size="12" font-weight="800" letter-spacing="2">APEX AUTONOMOUS CARTOGRAPHY // V3</text>
+    <text x="0" y="32" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="26" font-weight="800">${escapeXml(summary.owner)} Repository Topology</text>
+    <text x="${width - 80}" y="20" fill="#64748B" font-family="Consolas, monospace" font-size="12" text-anchor="end">SYNC: ${escapeXml(summary.generatedAt.split('T')[0])}</text>
+  </g>
+
+  <!-- Metrics Chips -->
+  <g transform="translate(40, 115)">
+    <!-- Total Chip -->
+    <rect x="0" y="0" width="180" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
+    <text x="20" y="26" fill="#64748B" font-family="system-ui, sans-serif" font-size="11" font-weight="700">TOTAL NODES</text>
+    <text x="20" y="55" fill="#38BDF8" font-family="system-ui, sans-serif" font-size="24" font-weight="800">${summary.totalNodes}</text>
+
+    <!-- Public Chip -->
+    <rect x="200" y="0" width="180" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
+    <text x="220" y="26" fill="#64748B" font-family="system-ui, sans-serif" font-size="11" font-weight="700">PUBLIC DEPLOYED</text>
+    <text x="220" y="55" fill="#10B981" font-family="system-ui, sans-serif" font-size="24" font-weight="800">${summary.publicCount}</text>
+
+    <!-- Vault Chip -->
+    <rect x="400" y="0" width="180" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
+    <text x="420" y="26" fill="#64748B" font-family="system-ui, sans-serif" font-size="11" font-weight="700">ENCRYPTED VAULTS</text>
+    <text x="420" y="55" fill="#F43F5E" font-family="system-ui, sans-serif" font-size="24" font-weight="800">${summary.vaultCount}</text>
+
+    <!-- Tech Stack Summary -->
+    <rect x="600" y="0" width="320" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
+    <text x="620" y="26" fill="#64748B" font-family="system-ui, sans-serif" font-size="11" font-weight="700">PRIMARY TECH STACK</text>
+    <text x="620" y="52" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="13" font-weight="600">${escapeXml(topLangs || 'TypeScript · Python')}</text>
+  </g>
+
+  <!-- Topology Node Rows -->
+  ${rowsSvg}
+
+  <!-- Footer Status Bar -->
+  <g transform="translate(40, ${height - 25})">
+    <line x1="0" y1="0" x2="920" y2="0" stroke="#1E293B" stroke-width="1"/>
+    <text x="0" y="16" fill="#475569" font-family="Consolas, monospace" font-size="10">HMAC-SHA256 SECURED · ZERO-KNOWLEDGE PUBLIC PROJECTION</text>
+    <text x="920" y="16" fill="#475569" font-family="system-ui, sans-serif" font-size="10" text-anchor="end">AUTONOMOUS ORCHESTRATION ENGINE</text>
+  </g>
+</svg>`;
+  }
+}
