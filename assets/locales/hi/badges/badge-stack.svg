@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="218" height="26" viewBox="0 0 218 26">
+  <rect width="218" height="26" rx="6" fill="#070B12" stroke="#1E293B" stroke-width="1"/>
+  <rect x="0" y="0" width="75" height="26" rx="6" fill="#0E1626"/>
+  <rect x="69" y="0" width="6" height="26" fill="#0E1626"/>
+  <text x="38" y="17" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="0.5">स्टैक</text>
+  <text x="147" y="17" fill="#818CF8" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" text-anchor="middle">TypeScript 5.6</text>
+</svg>

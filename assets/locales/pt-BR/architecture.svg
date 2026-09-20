@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 215" width="100%" height="100%">
+  <defs>
+    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070B12"/>
+      <stop offset="100%" stop-color="#0A101D"/>
+    </linearGradient>
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F2FE"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="870" height="215" rx="16" fill="url(#archBg)" stroke="#1E293B" stroke-width="1.5"/>
+
+  <!-- Top Header -->
+  <g transform="translate(30, 42)">
+    <circle cx="6" cy="0" r="5" fill="#10B981"/>
+    <text x="20" y="4" fill="url(#neonCyan)" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" letter-spacing="1.5">ARQUITETURA DO SISTEMA E PIPELINE</text>
+    <text x="810" y="4" fill="#475569" font-family="Consolas, monospace" font-size="11" text-anchor="end">4-STAGE PIPELINE</text>
+  </g>
+
+  <!-- 4 Step Boxes -->
+  
+    <g transform="translate(30, 85)">
+      <rect width="190" height="100" rx="10" fill="#0E172A" stroke="#38BDF8" stroke-width="1.5" opacity="0.95"/>
+      <rect x="12" y="12" width="28" height="20" rx="4" fill="#38BDF8" fill-opacity="0.15"/>
+      <text x="26" y="26" fill="#38BDF8" font-family="Consolas, monospace" font-size="11" font-weight="800" text-anchor="middle">01</text>
+      <text x="14" y="54" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700">1. Ingestão do GitHub</text>
+      <text x="14" y="76" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="11">APIs REST e GraphQL</text>
+    </g>
+      <g transform="translate(224, 130)">
+        <line x1="0" y1="0" x2="12" y2="0" stroke="#475569" stroke-width="2"/>
+        <polygon points="12,-4 16,0 12,4" fill="#475569"/>
+      </g>
+    <g transform="translate(240, 85)">
+      <rect width="190" height="100" rx="10" fill="#061D1E" stroke="#10B981" stroke-width="1.5" opacity="0.95"/>
+      <rect x="12" y="12" width="28" height="20" rx="4" fill="#10B981" fill-opacity="0.15"/>
+      <text x="26" y="26" fill="#10B981" font-family="Consolas, monospace" font-size="11" font-weight="800" text-anchor="middle">02</text>
+      <text x="14" y="54" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700">2. Ofuscação de Cofres</text>
+      <text x="14" y="76" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="11">Hash HMAC-SHA256</text>
+    </g>
+      <g transform="translate(434, 130)">
+        <line x1="0" y1="0" x2="12" y2="0" stroke="#475569" stroke-width="2"/>
+        <polygon points="12,-4 16,0 12,4" fill="#475569"/>
+      </g>
+    <g transform="translate(450, 85)">
+      <rect width="190" height="100" rx="10" fill="#1F1A0A" stroke="#F59E0B" stroke-width="1.5" opacity="0.95"/>
+      <rect x="12" y="12" width="28" height="20" rx="4" fill="#F59E0B" fill-opacity="0.15"/>
+      <text x="26" y="26" fill="#F59E0B" font-family="Consolas, monospace" font-size="11" font-weight="800" text-anchor="middle">03</text>
+      <text x="14" y="54" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700">3. Agregação de Matriz</text>
+      <text x="14" y="76" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="11">Agrupamento e Telemetria</text>
+    </g>
+      <g transform="translate(644, 130)">
+        <line x1="0" y1="0" x2="12" y2="0" stroke="#475569" stroke-width="2"/>
+        <polygon points="12,-4 16,0 12,4" fill="#475569"/>
+      </g>
+    <g transform="translate(660, 85)">
+      <rect width="190" height="100" rx="10" fill="#16132E" stroke="#818CF8" stroke-width="1.5" opacity="0.95"/>
+      <rect x="12" y="12" width="28" height="20" rx="4" fill="#818CF8" fill-opacity="0.15"/>
+      <text x="26" y="26" fill="#818CF8" font-family="Consolas, monospace" font-size="11" font-weight="800" text-anchor="middle">04</text>
+      <text x="14" y="54" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700">4. Motores de Renderização</text>
+      <text x="14" y="76" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="11">SVG Vetorial e Radar GIF</text>
+    </g>
+</svg>

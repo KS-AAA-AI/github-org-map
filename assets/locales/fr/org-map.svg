@@ -18,8 +18,8 @@
 
   <!-- Top Header HUD -->
   <g transform="translate(40, 45)">
-    <text x="0" y="0" fill="url(#neonAccent)" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" letter-spacing="2">APEX AUTONOMOUS CARTOGRAPHY // V3</text>
-    <text x="0" y="32" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="800">KS-AAA-AI Repository Topology</text>
+    <text x="0" y="0" fill="url(#neonAccent)" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" letter-spacing="2">CARTOGRAPHIE AUTONOME APEX // V3</text>
+    <text x="0" y="32" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="800">Topologie des Dépôts KS-AAA-AI</text>
     <text x="920" y="20" fill="#64748B" font-family="Consolas, monospace" font-size="12" text-anchor="end">SYNC: 2026-09-20</text>
   </g>
 
@@ -27,22 +27,22 @@
   <g transform="translate(40, 115)">
     <!-- Total Chip -->
     <rect x="0" y="0" width="180" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
-    <text x="20" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">TOTAL NODES</text>
+    <text x="20" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">TOTAL DES NŒUDS</text>
     <text x="20" y="55" fill="#38BDF8" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">2</text>
 
     <!-- Public Chip -->
     <rect x="200" y="0" width="180" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
-    <text x="220" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">PUBLIC DEPLOYED</text>
+    <text x="220" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">DÉPLOYÉS PUBLICS</text>
     <text x="220" y="55" fill="#10B981" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">2</text>
 
     <!-- Vault Chip -->
     <rect x="400" y="0" width="180" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
-    <text x="420" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">ENCRYPTED VAULTS</text>
+    <text x="420" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">COFFRES CHIFFRÉS</text>
     <text x="420" y="55" fill="#F43F5E" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">0</text>
 
     <!-- Tech Stack Summary -->
     <rect x="600" y="0" width="320" height="68" rx="12" fill="#0F172A" stroke="#1E293B"/>
-    <text x="620" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">PRIMARY TECH STACK</text>
+    <text x="620" y="26" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">STACK TECHNIQUE</text>
     <text x="620" y="52" fill="#E2E8F0" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600">TypeScript (1)  ·  Plain (1)</text>
   </g>
 
@@ -68,7 +68,7 @@
   <!-- Footer Status Bar -->
   <g transform="translate(40, 455)">
     <line x1="0" y1="0" x2="920" y2="0" stroke="#1E293B" stroke-width="1"/>
-    <text x="0" y="16" fill="#475569" font-family="Consolas, monospace" font-size="10">HMAC-SHA256 SECURED · ZERO-KNOWLEDGE PUBLIC PROJECTION</text>
-    <text x="920" y="16" fill="#475569" font-family="system-ui, -apple-system, sans-serif" font-size="10" text-anchor="end">AUTONOMOUS ORCHESTRATION ENGINE</text>
+    <text x="0" y="16" fill="#475569" font-family="Consolas, monospace" font-size="10">SÉCURISÉ HMAC-SHA256 · PROJECTION PUBLIQUE SANS DIVULGATION</text>
+    <text x="920" y="16" fill="#475569" font-family="system-ui, -apple-system, sans-serif" font-size="10" text-anchor="end">MOTEUR D&apos;ORCHESTRATION AUTONOME</text>
   </g>
 </svg>
