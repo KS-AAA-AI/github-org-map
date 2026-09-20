@@ -8,7 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 
 const LOCALES = ['en', 'ko', 'zh-CN', 'es', 'hi', 'ar', 'pt-BR', 'ru', 'fr', 'id'];
 
-async function fileExists(filePath) {
+async function fileExists(filePath: string): Promise<boolean> {
   try {
     await access(filePath, constants.R_OK);
     return true;
@@ -17,8 +17,8 @@ async function fileExists(filePath) {
   }
 }
 
-async function verify() {
-  console.log('🔍 Starting Comprehensive Verification Suite...\n');
+async function verify(): Promise<void> {
+  console.log('🔍 Starting Comprehensive Verification Suite (TypeScript)...\n');
   let errors = 0;
   let checks = 0;
 
@@ -82,7 +82,7 @@ async function verify() {
     for (const match of hrefMatches) {
       checks++;
       const linkTarget = match[1];
-      if (linkTarget.startsWith('http')) continue; // Skip external (none should exist except github or license)
+      if (linkTarget.startsWith('http')) continue;
       const resolved = path.resolve(docDir, linkTarget);
       const exists = await fileExists(resolved);
       if (!exists) {

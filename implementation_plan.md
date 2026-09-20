@@ -8,6 +8,7 @@
 - **v5**: 창 최소화/최대화 시각 애니메이션 복원 - MinAnimate(0->1) 및 시스템 브로드캐스트 적용 (+25, -0)
 - **v6**: 다중 GitHub 계정 환경 및 전역 바이브 코딩(Vibe Coding) 연동 체계 구축 (+65, -0)
 - **v7**: github-org-map 10개국어 다국어화 및 언어별 SVG/GIF 독립 에셋 파이프라인 구축 (+140, -0)
+- **v8**: KS-AAA-AI/github-org-map-private 비공개(Private) 레포지토리 구축, 독립 로컬 워크스페이스 분리, 이중 보안 암호화 마스킹 유지, 내부 전용 자동화 동기화 액션 워크플로 구성 (+120, -0)
 
 ---
 ## 🏛️ [v1 Specification] 1차 시스템 진단 및 최적화 후보군 설계
@@ -243,3 +244,47 @@
 2. **내부 네비게이션 링크 검사**: 10개 문서 간 90개 언어 전환 링크 100% 정상 연결 확인.
 3. **GIF 애니메이션 규격 검증**: `loop: 0`, `duration: 70ms` 무한 자동 루프 확인.
 4. **Git 커밋 및 원격 푸시**: `KS-AAA-AI/github-org-map` 저장소 `main` 브랜치에 배포 완료 검증.
+
+---
+
+## 🚀 [v8 Specification] github-org-map-private 비공개(Private) 레포지토리 구축
+
+사용자 인터랙티브 정렬에 따라 `KS-AAA-AI`의 비공개 토폴로지 관리 레포지토리와 독립 워크스페이스를 구축합니다 (+120, -0):
+
+### 1. 비공개 레포지토리 생성 명세
+- **원격 레포지토리명**: `KS-AAA-AI/github-org-map-private`
+- **공개 상태**: `Private` (비공개, 오직 인가된 계정/토큰만 접근 가능)
+- **설명(Description)**: `Internal & Private repository topology management engine for KS-AAA-AI ecosystem with salted HMAC-SHA256 privacy safeguards.`
+
+### 2. 보안 마스킹 정책 (이중 보안 모드)
+- 사용자 결정에 따라 비공개 레포지토리에서도 `HMAC-SHA256` 암호화 마스킹을 동일하게 유지하여, 비인가 코드 열람이나 유출 시에도 민감 저장소의 식별자와 내부 설명이 2차 방어선으로 안전하게 보호되도록 구성.
+- `MASK_SALT` 및 토큰 환경변수는 GitHub Actions Secrets 또는 로컬 `.env`에서 안전하게 관리.
+
+### 3. 독립 로컬 워크스페이스 구조
+- **경로**: `C:\Users\Administrator\Desktop\New_work\github\github-org-map-private`
+- 기존 공개용 워크스페이스(`github-org-map`)와 격리하여 상호 간섭 방지.
+- `git clone https://github.com/KS-AAA-AI/github-org-map-private.git` 형태로 독립된 Git 히스토리 및 워킹 트리 유지.
+
+### 4. 내부 전용 자동화 동기화 액션 워크플로 (`.github/workflows/private-sync-cron.yml`)
+- 매일 지정된 시각(00:00 KST / 15:00 UTC)에 비공개 레포지토리 내에서 토폴로지를 자동 갱신하고 에셋/문서를 최신화하는 Cron 파이프라인 탑재.
+- 지수 백오프 및 Fail-closed 보안 가드레일 적용.
+
+---
+
+## 📋 [v8 Integrated Final Spec & Action Plan]
+
+### User Review Required
+- 사용자 응답 완료: `github-org-map-private` (Private) / 이중 보안 마스킹 유지 / 독립 로컬 폴더 분리 / 내부 동기화 Actions 워크플로 포함.
+
+### Proposed Changes
+#### [NEW] GitHub Remote Repository: `KS-AAA-AI/github-org-map-private` (Private)
+#### [NEW] Local Workspace: `C:\Users\Administrator\Desktop\New_work\github\github-org-map-private`
+#### [NEW] `.github/workflows/private-sync-cron.yml` (비공개 전용 자동 갱신 워크플로)
+#### [NEW] `config/topology.config.json` (비공개 레포 명세 연동)
+
+### Verification Plan
+1. `gh repo view KS-AAA-AI/github-org-map-private`로 원격 비공개(private) 상태 검증.
+2. 로컬 디렉토리 `github-org-map-private` 소스 코드 및 Git 리모트 정상 바인딩 검증.
+3. `npm run test` / `npm run verify:i18n` 검증 통과 확인.
+4. 원격 `main` 브랜치에 초기 커밋 및 푸시 성공 검증.
+

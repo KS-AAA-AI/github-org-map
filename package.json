@@ -10,8 +10,8 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "generate": "tsx src/index.ts",
-    "generate:i18n": "node scripts/build-localized-all.mjs",
-    "verify:i18n": "node scripts/verify-all.mjs",
+    "generate:i18n": "tsx scripts/build-localized-all.ts",
+    "verify:i18n": "tsx scripts/verify-all.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc"
   },

@@ -1,0 +1,13 @@
+# Language Detection Overrides
+*.ts linguist-detectable=true
+*.ts linguist-language=TypeScript
+src/**/*.ts linguist-detectable=true
+src/**/*.ts linguist-language=TypeScript
+scripts/**/*.ts linguist-detectable=true
+scripts/**/*.ts linguist-language=TypeScript
+
+# Vendored & Documentation (exclude from language breakdown)
+docs/* linguist-documentation=true
+locales/* linguist-documentation=true
+assets/**/*.svg linguist-documentation=true
+artifacts/**/*.svg linguist-documentation=true

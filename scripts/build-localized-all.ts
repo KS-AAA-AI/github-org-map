@@ -8,8 +8,80 @@ const { GIFEncoder, quantize, applyPalette } = pkg;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
-// 10 Locales Definition
-const LOCALES = [
+export interface LocaleMeta {
+  code: string;
+  flag: string;
+  name: string;
+  isRTL: boolean;
+  path: string;
+  isRoot: boolean;
+}
+
+export interface BadgeItem {
+  label: string;
+  value: string;
+}
+
+export interface StepItem {
+  title: string;
+  desc: string;
+}
+
+export interface LocaleI18n {
+  title: string;
+  subtitle: string;
+  hudSub: string;
+  hudTitle: string;
+  totalNodes: string;
+  publicDeployed: string;
+  encryptedVaults: string;
+  primaryStack: string;
+  statusLeft: string;
+  statusRight: string;
+  publicBadge: string;
+  vaultBadge: string;
+  radarTitle: string;
+  radarStatus: string;
+  radarSystem: string;
+  radarFreq: string;
+  badges: {
+    workflow: BadgeItem;
+    license: BadgeItem;
+    stack: BadgeItem;
+    security: BadgeItem;
+  };
+  architecture: {
+    title: string;
+    step1: StepItem;
+    step2: StepItem;
+    step3: StepItem;
+    step4: StepItem;
+  };
+  doc: {
+    overviewTitle: string;
+    overviewDesc: string;
+    feat1Title: string;
+    feat1Desc: string;
+    feat2Title: string;
+    feat2Desc: string;
+    feat3Title: string;
+    feat3Desc: string;
+    feat4Title: string;
+    feat4Desc: string;
+    telemetryTitle: string;
+    telemetryDesc: string;
+    startTitle: string;
+    prereq: string;
+    quickstart: string;
+    securityTitle: string;
+    sec1: string;
+    sec2: string;
+    sec3: string;
+    footer: string;
+  };
+}
+
+export const LOCALES: LocaleMeta[] = [
   { code: 'en', flag: '🇺🇸', name: 'English', isRTL: false, path: 'README.md', isRoot: true },
   { code: 'ko', flag: '🇰🇷', name: '한국어', isRTL: false, path: 'locales/ko.md', isRoot: false },
   { code: 'zh-CN', flag: '🇨🇳', name: '中文', isRTL: false, path: 'locales/zh-CN.md', isRoot: false },
@@ -22,7 +94,7 @@ const LOCALES = [
   { code: 'id', flag: '🇮🇩', name: 'Bahasa Indonesia', isRTL: false, path: 'locales/id.md', isRoot: false },
 ];
 
-const I18N_DATA = {
+export const I18N_DATA: Record<string, LocaleI18n> = {
   'en': {
     title: 'Apex Cartography Engine (v3.0)',
     subtitle: 'Autonomous daily cartography and topology mapping for the KS-AAA-AI ecosystem.',
@@ -555,8 +627,7 @@ const I18N_DATA = {
   }
 };
 
-// SVG Escape Utility
-function escapeXml(unsafe) {
+function escapeXml(unsafe: string): string {
   return unsafe.replace(/[<>&'"]/g, (c) => {
     switch (c) {
       case '<': return '&lt;';
@@ -569,9 +640,7 @@ function escapeXml(unsafe) {
   });
 }
 
-// 1. Generate Badges (4 items per locale)
-function renderBadgeSvg(label, value, valueColor = '#00F2FE') {
-  // Dynamic width calculation based on string lengths
+export function renderBadgeSvg(label: string, value: string, valueColor = '#00F2FE'): string {
   const lLen = label.length;
   const vLen = value.length;
   const leftWidth = Math.max(75, Math.min(115, Math.round(lLen * 8.5 + 24)));
@@ -589,11 +658,9 @@ function renderBadgeSvg(label, value, valueColor = '#00F2FE') {
 </svg>`;
 }
 
-// 2. Generate Architecture Diagram SVG
-function renderArchitectureSvg(localeCode) {
+export function renderArchitectureSvg(localeCode: string): string {
   const i18n = I18N_DATA[localeCode] || I18N_DATA['en'];
   const arch = i18n.architecture;
-  const isRTL = LOCALES.find(l => l.code === localeCode)?.isRTL || false;
 
   const steps = [
     { num: '01', title: arch.step1.title, desc: arch.step1.desc, col: '#38BDF8', fill: '#0E172A' },
@@ -654,8 +721,7 @@ function renderArchitectureSvg(localeCode) {
 </svg>`;
 }
 
-// 3. Generate Vector Topology Canvas SVG
-function renderTopologySvg(localeCode, summary, nodes) {
+export function renderTopologySvg(localeCode: string, summary: any, nodes: any[]): string {
   const i18n = I18N_DATA[localeCode] || I18N_DATA['en'];
   const width = 1000;
   const height = 480;
@@ -749,8 +815,7 @@ function renderTopologySvg(localeCode, summary, nodes) {
 </svg>`;
 }
 
-// 4. Generate Animated Radar Scan GIF using Sharp + gifenc
-async function generateRadarGif(localeCode) {
+export async function generateRadarGif(localeCode: string): Promise<Buffer> {
   const i18n = I18N_DATA[localeCode] || I18N_DATA['en'];
   const width = 480;
   const height = 240;
@@ -762,7 +827,6 @@ async function generateRadarGif(localeCode) {
     const scanY = (f / frameCount) * height;
     const pulseR = 25 + Math.sin((f / frameCount) * Math.PI * 2) * 20;
 
-    // Build SVG frame
     const svgFrame = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
       <defs>
         <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
@@ -827,13 +891,11 @@ async function generateRadarGif(localeCode) {
       </g>
     </svg>`;
 
-    // Rasterize via sharp
     const { data } = await sharp(Buffer.from(svgFrame))
       .ensureAlpha()
       .raw()
       .toBuffer({ resolveWithObject: true });
 
-    // Quantize & write frame
     const palette = quantize(data, 128);
     const index = applyPalette(data, palette);
     gif.writeFrame(index, width, height, {
@@ -847,8 +909,7 @@ async function generateRadarGif(localeCode) {
   return Buffer.from(gif.bytes());
 }
 
-// 5. Build HTML Navigation Bar
-function buildNavBar(currentLocaleCode) {
+export function buildNavBar(currentLocaleCode: string): string {
   const isCurrentRoot = currentLocaleCode === 'en';
   const links = LOCALES.map(loc => {
     if (loc.code === currentLocaleCode) {
@@ -863,8 +924,7 @@ function buildNavBar(currentLocaleCode) {
   return `<p align="center">\n  ${links.join(' · \n  ')}\n</p>`;
 }
 
-// 6. Generate Localized Markdown Document
-function renderMarkdownDoc(locale) {
+export function renderMarkdownDoc(locale: LocaleMeta): string {
   const i18n = I18N_DATA[locale.code] || I18N_DATA['en'];
   const d = i18n.doc;
   const isRoot = locale.isRoot;
@@ -986,11 +1046,9 @@ npm run generate
 `;
 }
 
-// Main Execution
-async function main() {
-  console.log('🚀 Starting Multilingual Cartography Asset & Doc Pipeline...');
+async function main(): Promise<void> {
+  console.log('🚀 Starting Multilingual TypeScript Cartography Pipeline...');
 
-  // Mocked/current topology state
   const summary = {
     owner: 'KS-AAA-AI',
     totalNodes: 2,
@@ -1013,7 +1071,6 @@ async function main() {
     }
   ];
 
-  // Ensure directories
   await mkdir(path.join(ROOT, 'locales'), { recursive: true });
   await mkdir(path.join(ROOT, 'assets', 'locales'), { recursive: true });
 
@@ -1026,7 +1083,6 @@ async function main() {
 
     const i18n = I18N_DATA[loc.code];
 
-    // 1. Badges
     const badgeW = renderBadgeSvg(i18n.badges.workflow.label, i18n.badges.workflow.value, '#00F2FE');
     const badgeL = renderBadgeSvg(i18n.badges.license.label, i18n.badges.license.value, '#38BDF8');
     const badgeS = renderBadgeSvg(i18n.badges.stack.label, i18n.badges.stack.value, '#818CF8');
@@ -1037,37 +1093,32 @@ async function main() {
     await writeFile(path.join(badgesDir, 'badge-stack.svg'), badgeS, 'utf-8');
     await writeFile(path.join(badgesDir, 'badge-security.svg'), badgeSec, 'utf-8');
 
-    // 2. Architecture SVG
     const archSvg = renderArchitectureSvg(loc.code);
     await writeFile(path.join(locAssetDir, 'architecture.svg'), archSvg, 'utf-8');
 
-    // 3. Topology Map SVG
     const mapSvg = renderTopologySvg(loc.code, summary, nodes);
     await writeFile(path.join(locAssetDir, 'org-map.svg'), mapSvg, 'utf-8');
 
-    // 4. Radar Scan GIF
     console.log(`  └ Compiling animated radar GIF for ${loc.code}...`);
     const radarGif = await generateRadarGif(loc.code);
     await writeFile(path.join(locAssetDir, 'org-map.gif'), radarGif);
 
-    // 5. Markdown Doc
     const docContent = renderMarkdownDoc(loc);
     const targetDocPath = path.join(ROOT, loc.path);
     await writeFile(targetDocPath, docContent, 'utf-8');
     console.log(`  ✔ Markdown & Assets emitted: ${loc.path}`);
   }
 
-  // Synchronize Root org-map.svg and org-map.gif with en
   const enAssetDir = path.join(ROOT, 'assets', 'locales', 'en');
   const rootSvg = await readFile(path.join(enAssetDir, 'org-map.svg'));
   const rootGif = await readFile(path.join(enAssetDir, 'org-map.gif'));
   await writeFile(path.join(ROOT, 'org-map.svg'), rootSvg);
   await writeFile(path.join(ROOT, 'org-map.gif'), rootGif);
 
-  console.log('\n🎉 [Success] All 10 Locales Generated (100% Local Assets, 0% External CDNs)!');
+  console.log('\n🎉 [Success] All 10 Locales Generated (100% TypeScript Pipeline)!');
 }
 
 main().catch(err => {
-  console.error('❌ Pipeline failed:', err);
+  console.error('❌ TypeScript pipeline failed:', err);
   process.exit(1);
 });
